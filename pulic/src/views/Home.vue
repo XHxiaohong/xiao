@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <xl-meun :meunData="meunData"></xl-meun>
+    <xl-meun :meunData="meunData" title="name"></xl-meun>
   </div>
 </template>
 
@@ -31,7 +31,17 @@ export default {
         }, {
           name: ' 菜单2_2',
           path: '',
+          child: [{
+            name: ' 菜单2_2_1',
+            path: '',
+          }, {
+            name: ' 菜单2_2_2',
+            path: '',
+          }]
         }]
+      }, {
+        name: ' 菜单3',
+        path: '',
       }]
     }
   }
