@@ -1,12 +1,13 @@
 <template>
-  <div class="home">
-    <xl-meun :meunData="meunData" title="name"></xl-meun>
+  <div class="container">
+    <xl-meun class="meun" :meunData="meunData" title="name" :mode="'horizontal'"></xl-meun>
+    <div class="cenent">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
@@ -28,6 +29,10 @@ export default {
         child: [{
           name: ' 菜单2_1',
           path: '',
+          child: [{
+            name: ' 菜单2_1_1',
+            path: '',
+          }]
         }, {
           name: ' 菜单2_2',
           path: '',
@@ -44,6 +49,21 @@ export default {
         path: '',
       }]
     }
-  }
+  },
+  // mounted: {}
 }
 </script>
+
+<style lang="less">
+.container {
+  // display: flex;
+  // justify-content: space-between;
+}
+.meun {
+  width: 200px;
+  height: 60px;
+}
+.cenent {
+  flex: 1;
+}
+</style>

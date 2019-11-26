@@ -1,0 +1,23 @@
+{
+  "id": "1346626",
+  "name": "node-xiao",
+  "font_family": "iconfont",
+  "css_prefix_text": "xl-ioc-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11474197",
+      "name": "arrow-down",
+      "font_class": "arrow-down",
+      "unicode": "e6eb",
+      "unicode_decimal": 59115
+    },
+    {
+      "icon_id": "11474198",
+      "name": "arrow-right",
+      "font_class": "arrow-right",
+      "unicode": "e6ec",
+      "unicode_decimal": 59116
+    }
+  ]
+}

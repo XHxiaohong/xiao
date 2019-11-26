@@ -1,13 +1,11 @@
 <template>
-  <ul id="xl-meun" :class={}>
+  <ul id="xl-meun"  class="ul" :class ="[mode]">
     <template v-for="meun in meunData">
       <xl-meun-item :key="meun[title]" v-if="!meun.child">
-        {{meun[title]}}
+        <span>{{meun[title]}}</span>
       </xl-meun-item>
 
-      <xl-meun-item-group v-else :key="meun[title]" :title="title" :path="path" :childData="meun"> </xl-meun-item-group>
- 
-      <!-- -->
+      <xl-meun-item-group v-else ref="group" :key="meun[title]" @myEvent="noGroup" :title="title" :path="path" :childData="meun"> </xl-meun-item-group>
     </template>
   </ul>
 </template>
@@ -27,9 +25,11 @@ export default {
       type: String,
       default: 'path'
     },
-    mode: String
+    mode: {
+      type: String,
+      default: 'vertical' // horizontal 
+    }
   },
-  // child
   components: {
     XlMeunItem,
     XlMeunItemGroup
@@ -38,6 +38,11 @@ export default {
   methods: {
     log () {
       console.log(this.meun)
+    },
+    noGroup () {
+      this.$refs.group.map(key => {
+        key.isGroup = false
+      })
     }
   },
   mounted() {
@@ -45,3 +50,6 @@ export default {
   }
 }
 </script>
+<style scoped lang="less">
+@import url(../../assets/menu/index.less);
+</style>
