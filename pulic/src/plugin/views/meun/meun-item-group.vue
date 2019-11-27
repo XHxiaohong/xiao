@@ -1,7 +1,7 @@
 <template>
   <li>
     <div @click="change"> 
-      <span>{{ childData[title] }}</span>
+      <router-link :to="childData[path]">{{childData[title]}}</router-link>
       <i class="xl-icon xl-icon-arrow-down" :class="isGroup? 'xl-icon-hover' : ''" v-if="childData.child"></i>
     </div>
     <ul v-if="childData.child" v-show="isGroup" class="group"> 

@@ -2,7 +2,7 @@
   <ul id="xl-meun"  class="ul" :class ="[mode]">
     <template v-for="meun in meunData">
       <xl-meun-item :key="meun[title]" v-if="!meun.child">
-        <span>{{meun[title]}}</span>
+        <router-link :to="meun[path]">{{meun[title]}}</router-link>
       </xl-meun-item>
 
       <xl-meun-item-group v-else ref="group" :key="meun[title]" @myEvent="noGroup" :title="title" :path="path" :childData="meun"> </xl-meun-item-group>
@@ -44,9 +44,6 @@ export default {
         key.isGroup = false
       })
     }
-  },
-  mounted() {
-    console.log(this.meun, 'meun')
   }
 }
 </script>

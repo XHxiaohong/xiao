@@ -5,9 +5,8 @@ import store from './store'
 
 import xhUi from './plugin'
 
-console.log(xhUi)
-Vue.use(xhUi);
 
+Vue.use(xhUi);
 Vue.config.productionTip = false
 
 new Vue({
