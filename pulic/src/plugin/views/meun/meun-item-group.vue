@@ -54,5 +54,5 @@ export default {
 </script>
 <style scoped lang="less">
 @import url('../../assets/icon/iconfont.css');
-@import url(../../assets/menu/meun-item-group.less);
+@import url('../../assets/menu/meun-item-group.less');
 </style>

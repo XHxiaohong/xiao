@@ -17,8 +17,9 @@ export default {
     success () {
       console.log(this.$message)
       this.$message({
-        type: 'success',
-        message: '我是一条成功消息！'
+        type: 'succress',
+        message: '我是一条成功消息！',
+        showClose: true
       })
     },
     warning () {},
