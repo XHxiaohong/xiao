@@ -21,6 +21,10 @@ const Message = (options) => {
 
   instance.vm = instance.$mount();
   document.body.appendChild(instance.vm.$el);
+  instance.vm.visible = true;
+
+
+  console.log(instance.vm.$el)
   console.log(options);
   console.log(MessageConstructor);
 }
