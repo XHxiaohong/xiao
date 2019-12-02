@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <button @click="success">成功</button>
-    <button>警告</button>
-    <button>失败</button>
-    <button>消息</button>
+    <button @click="warning">警告</button>
+    <button @click="error">失败</button>
+    <button >消息</button>
   </div>
 </template>
 
@@ -15,15 +15,22 @@ export default {
   },
   methods: {
     success () {
-      console.log(this.$message)
       this.$message({
-        type: 'succress',
+        type: 'success',
         message: '我是一条成功消息！',
         showClose: true
       })
     },
-    warning () {},
-    adnger () {},
+    warning () {
+      this.$message.warning({
+        type: 'warning',
+        message: '我是一条警告消息！',
+        showClose: true
+      })
+    },
+    error () {
+      this.$message.error('我是一条错误消息消息！')
+    },
     info () {},
   },
   mounted () {}

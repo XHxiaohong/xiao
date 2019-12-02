@@ -15,7 +15,7 @@ const install = (Vue) => {
     Vue.component(componentName, config.default || config); // 注册组件
   })
 
-  console.log(Message)
+  // console.log(Message)
   Vue.prototype.$message = Message;
 }
 
