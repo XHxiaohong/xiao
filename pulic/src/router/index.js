@@ -30,8 +30,9 @@ const routes = [
   // },
   ...components
 ]
+
 // console.log(components, 'components')
-// console.log(routes, 'routes')
+console.log(routes, 'routes')
 
 const router = new VueRouter({
   mode: 'hash',

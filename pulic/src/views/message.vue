@@ -3,7 +3,7 @@
     <button @click="success">成功</button>
     <button @click="warning">警告</button>
     <button @click="error">失败</button>
-    <button >消息</button>
+    <button @click="info">消息</button>
   </div>
 </template>
 
@@ -31,7 +31,14 @@ export default {
     error () {
       this.$message.error('我是一条错误消息消息！')
     },
-    info () {},
+    info () {
+      this.$message({
+        type: 'info',
+        message: '我是一条普通消息！',
+        showClose: true,
+        iconClass: true
+      })
+    },
   },
   mounted () {}
 }

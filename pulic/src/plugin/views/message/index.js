@@ -4,7 +4,8 @@ import MessageVue from './index.vue';
 let MessageConstructor = Vue.extend(MessageVue);
 
 let seed = 0;
-let instance = [];
+let instance;
+let instances = [];
 const Message = (options) => {
   options = options || {};
 

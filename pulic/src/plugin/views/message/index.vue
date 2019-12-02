@@ -5,7 +5,7 @@
       @mouseleave="startTimer"
       @mouseenter="clearTimer"
     >
-      <i :class="typeClass" v-if="iconClass"></i>
+      <i :class="[typeClass, 'xl-message__iconClass']" v-if="iconClass"></i>
       <slot>
         <p v-if="!dangerouslyUseHTMLString" class="el-message__content">{{ message }}</p>
         <p v-else v-html="message" class="el-message__content"></p>
@@ -26,7 +26,7 @@ export default {
       visible: false,
       showClose: false,
       iconClass: false,
-      // dangerouslyUseHTMLString: false
+      dangerouslyUseHTMLString: false
     }
   },
   computed: {
@@ -51,7 +51,6 @@ export default {
   },
   mounted () {
     this.startTimer();
-    console.log(this.type, typeMap.indexOf(this.type))
     if (typeMap.indexOf(this.type) < 0) this.type = 'info';
   }
 }

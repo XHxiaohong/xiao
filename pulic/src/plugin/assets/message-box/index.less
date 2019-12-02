@@ -1,0 +1,75 @@
+@import url(../color.less);
+
+.xl-message-box {
+  width: 380px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid;
+  border-radius: 5px;
+  background: @bk;
+  border-color: @border;
+  padding: 10px 20px;
+  margin-top: -125px;
+  margin-left: -150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.xl-message-box-enter-active {
+  transition: all .5s ease;
+}
+
+.xl-message-box-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.xl-message-box-enter, .xl-message-box-leave-to {
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.xl-message-box__title {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+}
+
+.xl-icon-close {
+  float: right;
+}
+
+.xl-button__box {
+ text-align: right; 
+ button {
+   margin: 0 10px;
+   padding: 5px 8px;
+ }
+}
+.xl-message-box__modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: @modal;
+}
+.xl-message-box__content {
+  flex: 1;
+}
+.xl-message-box__input {
+  display: block;
+  width: 100%;
+  height: 30px;
+  text-indent: 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: @border;
+  outline: none;
+}
+.xl-message-box__error {
+  color: red;
+  display: block;
+}

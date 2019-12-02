@@ -2,7 +2,7 @@
 
 // 查找 views 目录下所有的 vue 文件
 import Message from './views/message/index.js';
-
+import MessageBox from './views/messageBox/index.js';
 
 const requireComponent = require.context('./views', true, /\.vue$/);
 const install = (Vue) => {
@@ -17,8 +17,10 @@ const install = (Vue) => {
 
   // console.log(Message)
   Vue.prototype.$message = Message;
+  Vue.prototype.$alert = MessageBox.alert;
+  Vue.prototype.$confirm = MessageBox.confirm;
+  Vue.prototype.$prompt = MessageBox.prompt;
 }
-
 
 export default {
   install

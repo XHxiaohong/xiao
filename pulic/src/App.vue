@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="container">
-    <xl-meun class="meun" :meunData="meunData" title="name" mode="horizontal"></xl-meun>
+    <xl-meun class="meun" :meunData="meunData" title="name"></xl-meun>
+    <!-- <xl-meun class="meun" :meunData="meunData" title="name" mode="horizontal"></xl-meun> -->
     <div class="cenent">
       <router-view/>
     </div>
@@ -16,11 +17,14 @@ export default {
   data () {
     return {
       meunData: [{
-        name: 'message',
-        path: '/message',
-      }, {
         name: 'home',
-        path: '/home',
+        path: '/home'
+      }, {
+        name: 'message',
+        path: '/message'
+      }, {
+        name: 'messageBox',
+        path: '/messageBox'
       }, {
         name: 'about',
         path: '/about',
@@ -67,7 +71,7 @@ html, body,
 }
 .container {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
 }
 .meun {
   width: 200px;
