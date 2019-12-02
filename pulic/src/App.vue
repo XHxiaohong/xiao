@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container">
-    <xl-meun class="meun" :meunData="meunData" title="name"></xl-meun>
+    <xl-meun class="meun" :meunData="meunData" title="name" mode="horizontal"></xl-meun>
     <div class="cenent">
       <router-view/>
     </div>
@@ -67,6 +67,7 @@ html, body,
 }
 .container {
   display: flex;
+  flex-direction: column;
 }
 .meun {
   width: 200px;

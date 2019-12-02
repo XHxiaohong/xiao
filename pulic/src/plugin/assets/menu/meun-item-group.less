@@ -1,15 +1,35 @@
+@import url(../color.less);
+
 ul {
   list-style-type: none;
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
-.group {
+.xl-group {
   padding-left: 20px;
+  position: absolute;
+  background: @meun;
+  top: 100%;
+  left: -10%;
 }
+
+.horizontal { // 水平
+  .xl-group {
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+}
+
+.xl-meun-text {
+  display: flex;
+}
+
 .xl-icon {
-  width: 20px;
-  height: 20px;
+  margin-left: 5px;
   display: block;
-  float: right;
   text-align: center;
   transition: transform 0.5s;
 }
