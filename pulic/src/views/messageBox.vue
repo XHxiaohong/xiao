@@ -2,7 +2,7 @@
   <div class="container">
     <button @click="success">提示框</button>
     <button @click="warning">对话框</button>
-    <button @click="error">提交信息</button>
+    <xl-button @click="error">提交信息</xl-button>
   </div>
 </template>
 
