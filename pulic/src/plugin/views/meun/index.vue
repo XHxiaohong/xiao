@@ -1,5 +1,5 @@
 <template>
-  <ul id="xl-meun"  class="ul" :class ="[mode]">
+  <ul id="xl-meun" class="ul" :class ="[mode]">
     <template v-for="meun in meunData">
       <xl-meun-item :key="meun[title]" v-if="!meun.child">
         <router-link :to="meun[path]">{{meun[title]}}</router-link>

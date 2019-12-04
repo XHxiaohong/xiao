@@ -1,15 +1,50 @@
 @import url(../color.less);
 
-.xl-button {
-  padding: 5px 8px;
-  color: #202020;
-  background: white;
-  border: 1px solid;
-  border-color: @border;
-  margin: 0 5px;
-  outline: none;
+
+.xl-button_fun(@text, @bk, @bor_color) {
+  color: @text;
+  background: @bk;
+  border-color: @bor_color;
 }
 
-.xl-button:hover {
-  background: #409EFF;
+.xl-button {
+  padding: 5px 8px;
+  margin: 0 5px;
+  outline: none;
+  border: 1px solid;
+  border-radius: 5px;
+  .xl-button_fun(@textBlack, @textWhite, @border);
+}
+
+.xl-button--round {
+  border-radius: 20px;
+}
+
+.xl-button--success.xl-button--plain {
+  .xl-button_fun(@success, @bkWG,  @successPlain);
+}
+
+.xl-button--info,
+.xl-button--info:hover {
+  .xl-button_fun(@textWhite,  @gray,  @gray);
+}
+
+.xl-button--success,
+.xl-button--success:hover {
+  .xl-button_fun(@textWhite, @success,  @success);
+}
+
+.xl-button--warning,
+.xl-button--warning:hover {
+  .xl-button_fun(@textWhite, @warning,  @warning);
+}
+
+.xl-button--primary,
+.xl-button--primary:hover {
+  .xl-button_fun(@textWhite, @primary,  @primary);
+}
+
+.xl-button--danger,
+.xl-button--danger:hover {
+  .xl-button_fun(@textWhite, @danger,  @danger);
 }

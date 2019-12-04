@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <button @click="success">提示框</button>
-    <button @click="warning">对话框</button>
-    <xl-button @click="error">提交信息</xl-button>
+    <xl-button type="primary" @click="success">提示框</xl-button>
+    <xl-button type="warning" @click="warning">对话框</xl-button>
+    <xl-button type="success" @click="prompt()" round plain>提交信息</xl-button>
   </div>
 </template>
 
@@ -32,7 +32,8 @@ export default {
         this.$message.info('已放弃删除');
       })
     },
-    error () {
+    prompt () {
+      console.log(123456)
       this.$prompt('请输入邮箱！', '提示', {
         confirm: '确认',
         cancel: '取消',
