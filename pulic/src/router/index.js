@@ -18,11 +18,11 @@ requireComponent.keys().map(filePath => {
 })
 
 const routes = [
-  // {
-  //   path: '/home',
-  //   name: 'home',
-  //   component: Home
-  // },
+  {
+    name: '',
+    path: '/',
+    redirect: '/home'
+  },
   // {
   //   path: '/about',
   //   name: 'about',
@@ -32,7 +32,7 @@ const routes = [
 ]
 
 // console.log(components, 'components')
-console.log(routes, 'routes')
+// console.log(routes, 'routes')
 
 const router = new VueRouter({
   mode: 'hash',
