@@ -33,7 +33,6 @@ export default {
       })
     },
     prompt () {
-      console.log(123456)
       this.$prompt('请输入邮箱！', '提示', {
         confirm: '确认',
         cancel: '取消',

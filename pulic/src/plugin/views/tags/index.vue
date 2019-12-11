@@ -15,11 +15,11 @@
       </template>
     </ul>
 
-    <ul class="xl-tag-meun" :style="meunClass" v-if="isContextmenu" v-show="visible">
+    <!-- <ul @click.stop="" v-closeMeun class="xl-tag-meun" :style="meunClass" v-if="isContextmenu" v-show="visible">
       <li v-if="isShowMeun" @click="close(value, index)">关闭</li>
       <li @click="closeOthersTags">关闭其他</li>
       <li @click="closeAllTags">关闭全部</li>
-    </ul>
+    </ul> -->
   </section>
 </template>
 <script>
@@ -35,6 +35,17 @@ export default {
       isShowMeun: true
     }
   },
+  // directives: {
+  //   closeMeun: {
+  //     inserted: (el) => {
+  //       _this = this
+  //       document.onmousedown = (ev) =>{
+  //         _this.visible = false;
+  //         event.stopImmediatePropagation();
+  //       }
+  //     }
+  //   }
+  // },
   props: {
     tags: {
       type: Array,
@@ -58,7 +69,6 @@ export default {
   methods: {
     choice (value, index) {
       this.sele_Index = index;
-      this.visible = false;
       this.$emit('click', value, index)
     },
     close (value, index) {
@@ -66,6 +76,7 @@ export default {
       this.visible = false;
     },
     closeOthersTags () {
+      if (!this.index) return false;
       this.$emit('closeOthersTags', this.value, this.index);
       this.visible = false;
     },

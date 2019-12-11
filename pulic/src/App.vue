@@ -10,9 +10,9 @@
        :selection="selection" 
        :noClose="0" 
        @click="choice" 
-       @close="removeData"
-       @closeAllTags="closeAllTags"
-       @closeOthersTags="closeOthersTags"></xl-tag>
+       @close="removeData"></xl-tag>
+       <!-- @closeAllTags="closeAllTags"
+       @closeOthersTags="closeOthersTags" -->
 
       <div class="cenent"> 
         <keep-alive :include="include">
@@ -78,29 +78,31 @@ export default {
   },
   methods: {
     choice (value, index) {
-      this.$router.path = value.path;
-      this.selection = index;
-      sessionStorage.setItem('selection', JSON.stringify(index));
+      if (this.selection !== index) {
+        this.selection = index;
+        this.$router.push({ path: value.path }) 
+        sessionStorage.setItem('selection', JSON.stringify(index));
+      }
     },
     removeData (value, index) {
       this.include.splice(index, 1);
       if (this.selection == index) {
         this.selection = this.include.length - 1;
-        this.$router.path = this.include[this.selection].path;
+        this.$router.push({ path: this.include[this.selection].path }) 
       }
       sessionStorage.setItem('include', JSON.stringify(this.include));
     },
     closeAllTags () {
       this.selection = 0;
       this.include = [{ name: 'home', path: '/home' }];
-      this.$router.path = this.include[0].path;
+      // this.$router.push({ path: this.include[0].path }) 
       sessionStorage.setItem('include', JSON.stringify(this.include));
     },
     closeOthersTags(value, index) {
       this.include = [{ name: 'home', path: '/home' }];
       this.include.push(value);
       this.selection = 1;
-      this.$router.path = this.include[1].path;
+      this.$router.push({ path: this.include[1].path }) 
       sessionStorage.setItem('include', JSON.stringify(this.include));
     }
   },
@@ -109,16 +111,19 @@ export default {
     this.selection = JSON.parse(sessionStorage.getItem('index')) || this.include.length - 1;
   },
   watch: {
-    $route (to, from){
-      const tag = this.include.find(key => to.path == key.path)
+    $route (to, from) {
+      const tag = this.include.find(key => to.path == key.path);
       if (!tag) {
-        this.include.push(to)
+        this.include.push({
+          name: to.name,
+          path: to.path
+        })
         this.selection = this.include.length - 1;
       } else {
         this.selection = this.include.indexOf(tag);
       }
-      var include = [...this.include]
-      sessionStorage.setItem('include', JSON.stringify(include))
+
+      sessionStorage.setItem('include', JSON.stringify(this.include));
     } 
   }
 }

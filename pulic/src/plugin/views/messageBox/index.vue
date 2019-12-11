@@ -30,7 +30,7 @@
 </template>
 
 <script>
-const typeMap = ['alert', 'confirm', 'prompt']
+const typeMap = ['alert', 'confirm', 'prompt'];
 export default {
   name: 'messageBox',
   data () {
