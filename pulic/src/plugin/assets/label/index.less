@@ -1,0 +1,37 @@
+@import url(../color.less);
+
+.xl-label_fun(@text, @bk, @bor_color) {
+  color: @text;
+  background: @bk;
+  border-color: @bor_color;
+}
+
+.xl-label {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+  margin: 2px 5px;
+}
+.xl-label span {
+  padding-right: 5px;
+}
+
+.xl-label-success {
+  .xl-label_fun(@success, @bk, @success);
+}
+
+.xl-label-primary {
+  .xl-label_fun(@primary, @bk, @primary);
+}
+
+.xl-label-info {
+  .xl-label_fun(@gray, @bk, @gray);
+}
+
+.xl-label-warning {
+  .xl-label_fun(@warning, @bk, @warning);
+}
+
+.xl-label-danger {
+  .xl-label_fun(@danger, @bk, @danger);
+}

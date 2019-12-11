@@ -2,7 +2,14 @@
   <div class="container">
     <xl-button type="primary" @click="success">提示框</xl-button>
     <xl-button type="warning" @click="warning">对话框</xl-button>
-    <xl-button type="success" @click="prompt()" round plain>提交信息</xl-button>
+    <xl-button type="success" @click="prompt()" round plain>提交信息</xl-button> 
+    <br>
+
+    <xl-label class="marging">标签1</xl-label>
+    <xl-label type="info">标签2</xl-label>
+    <xl-label type="success">标签3</xl-label>
+    <xl-label type="warning">标签4</xl-label>
+    <xl-label type="danger">标签5</xl-label>
   </div>
 </template>
 
