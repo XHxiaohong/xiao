@@ -22,10 +22,8 @@
         <i class="xl-icon xl-icon-double-arrow-left" @click="handleYear(true)"></i>
         <i class="xl-icon xl-icon-arrow-lift" @click="handleMonth(true)"></i>
         <section class="xl-date-title-section">
-          <span> {{Year}} </span>
-          <span> 年 </span> 
-          <span> {{Month}} </span>  
-          <span> 月 </span>
+          <span> {{Year}}  年 </span> 
+          <span> {{Month}} 月 </span>
         </section>
         <i class="xl-icon xl-icon-arrow-right1" @click="handleMonth(false)"></i>
         <i class="xl-icon xl-icon-double-arro-right" @click="handleYear(false)"></i>
@@ -186,9 +184,13 @@ export default {
     },
     setValue (val) {
       if (val == '') return;
-      this.dateValue = val.split('-').map(num => {
+      var dateArr = val.split('-').map(num => {
         return num >= 10 ? + num : ('0' + num)
-      }).join('-');
+      })
+      this.Year = dateArr[0];
+      this.Month = dateArr[1];
+      this.Day = dateArr[2];
+      this.dateValue = dateArr.join('-');
     },
     handleYear (ber) {
        ber ? 
@@ -228,83 +230,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.xl-date-pilcker {
-  width: 180px;
-  height: 25px;
-  position: relative;
-  border: 1px solid #888;
-  border-radius: 5px; 
-  display: inline-block;
-}
-
-.xl-date-pilcker-input__box {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: start;
-  .xl-date-pilcker-input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-  }
-  .xl-icon {
-    display: block;
-    margin: 0 5px;
-    color: #808080;
-  }
-  .xl-icon-reeor-fill {
-    display: none
-  }
-}
-.xl-date-pilcker-input__box:hover {
-  .xl-icon-reeor-fill {
-    display: block;
-  }
-}
-.xl-date-conent {
-  width: 280px;;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  border: 1px solid rgba(136, 136, 136, 0.33);
-  padding: 8px 10px;
-  margin-top: 10px;
-  box-shadow: 1.5px 1px 1.5px 1.5px #afacac47;
-}
-.xl-date-title {
-  display: flex;
-  font-weight: 800;
-  justify-content: space-between;
-}
-.xl-date-title-section {
-  width: 100%;
-  text-align: center;
-}
-.xl-date__week {
-  margin: 5px 0;
-  font-weight: 600
-} 
-
-.xl-date-list__box {
-  color: #202020;
-  list-style-type: none;
-}
-.xl-date__week span,
-.xl-date-list__box li{
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  display: inline-block;
-}
-.xl-date-selection,
-.xl-date-list__box li:hover {
-  color: #409EFF;
-}
-
-.xl-date-future,
-.xl-date-pastTimes {
-  color: #aaa;
-}
+@import url(../../assets/datePilcker/index.less);
 </style>

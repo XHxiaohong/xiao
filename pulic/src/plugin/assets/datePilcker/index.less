@@ -1,0 +1,83 @@
+
+@import url(../color.less);
+
+.xl-date-pilcker {
+  width: 180px;
+  height: 25px;
+  position: relative;
+  border: 1px solid;
+  border-radius: 5px; 
+  display: inline-block;
+  border-color: @border;
+}
+
+.xl-date-pilcker-input__box {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: start;
+  .xl-date-pilcker-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+  .xl-icon {
+    display: block;
+    margin: 0 5px;
+    color: @textGray;
+  }
+  .xl-icon-reeor-fill {
+    display: none
+  }
+}
+.xl-date-pilcker-input__box:hover {
+  .xl-icon-reeor-fill {
+    display: block;
+  }
+}
+.xl-date-conent {
+  width: 280px;;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: 1px solid rgba(136, 136, 136, 0.33);
+  padding: 8px 10px;
+  margin-top: 10px;
+  box-shadow: 1px 1px 1px 1px #afacac47;
+}
+.xl-date-title {
+  display: flex;
+  font-weight: 800;
+  justify-content: space-between;
+}
+.xl-date-title-section {
+  width: 100%;
+  text-align: center;
+}
+.xl-date__week {
+  margin: 5px 0;
+  font-weight: 600
+} 
+
+.xl-date-list__box {
+  color: @lightBlack;
+  list-style-type: none;
+}
+.xl-date__week span,
+.xl-date-list__box li{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  display: inline-block;
+}
+.xl-date-selection,
+.xl-date-list__box li:hover {
+  color: @primary;
+}
+
+.xl-date-future,
+.xl-date-pastTimes {
+  color: @textA;
+}
