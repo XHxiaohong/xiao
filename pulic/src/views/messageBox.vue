@@ -10,6 +10,11 @@
     <xl-label type="success">标签3</xl-label>
     <xl-label type="warning">标签4</xl-label>
     <xl-label type="danger">标签5</xl-label>
+
+    <br>
+
+    <xl-date-pilcker  default-value="2019-10-2">
+    </xl-date-pilcker>
   </div>
 </template>
 
@@ -17,7 +22,9 @@
 export default {
   name: 'messageBox',
   data () {
-    return {}
+    return {
+      // value23: '123'
+    }
   },
   methods: {
     success () {
@@ -25,9 +32,7 @@ export default {
         type: 'success',
         confirm: '确认消息',
         showClose: true
-      }).then(req=> {
-        console.log(req)
-      })
+      }).then(req=> {})
     },
     warning () {
       this.$confirm('是否删除信息？', '对话信息', {
@@ -52,10 +57,11 @@ export default {
       })
     },
     info () {
-      console.log(this)
+      // console.log(this)
     },
   },
-  mounted () {}
+  mounted () {},
+  watch: {}
 }
 </script>
 <style lang="less" scoped>

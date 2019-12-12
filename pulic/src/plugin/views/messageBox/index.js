@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Vue from 'vue';
 import MessageBoxVue from './index.vue';
 const MessageBoxConstructor = Vue.extend(MessageBoxVue);
