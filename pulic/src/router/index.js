@@ -1,10 +1,12 @@
 // @ts-nocheck
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
+import login from '@/components/login.vue'
 
 Vue.use(VueRouter)
 const components = [];
+
 const requireComponent = require.context('../views/', true, /\.vue$/);
 requireComponent.keys().map(filePath => {
   let file = requireComponent(filePath);
@@ -19,9 +21,10 @@ requireComponent.keys().map(filePath => {
 
 const routes = [
   {
-    name: '',
+    name: 'login',
     path: '/',
-    redirect: '/home'
+    component: login
+    // redirect: '/home'
   },
   // {
   //   path: '/about',

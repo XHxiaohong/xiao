@@ -1,13 +1,18 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+// @ts-nocheck
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-import xhUi from './plugin'
+import http from './http';
+
+import xhUi from './plugin';
+
+Vue.prototype.$http = http;
 
 
 Vue.use(xhUi);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
