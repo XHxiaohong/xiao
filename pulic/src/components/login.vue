@@ -9,17 +9,19 @@
 
       <div class="xh-input-box">
         <i class="xh-ioc xh-ioc-yonghu1"></i>
-        <input type="text" name="usernmae" v-model="username" content="no-cache">
+        <input type="text" name="usernmae" v-model="username" content="no-cache" 
+        maxlength = "32" placeholder="请输入密码">
       </div>
 
       <div class="xh-input-box">
         <i class="xh-ioc xh-ioc-mima1" ></i>
-        <input type="password" name="password" v-model="password" autocomplete="new-password">
+        <input type="password" name="password" maxlength = "32"
+        v-model="password" autocomplete="new-password" placeholder="密码长度在6-32位字符之间">
       </div>
 
       <div class="xh-input-box" v-show="!selened">
         <i class="xh-ioc xh-ioc-youxiang3"></i>
-        <input type="email" name="email" v-model="email" content="no-cache">
+        <input type="email" name="email" v-model="email" placeholder="请输入用户邮箱！" content="no-cache">
       </div>
 
       <div class="xh-button-box">
@@ -32,14 +34,14 @@
           <input type="checkbox" name="checkbox" v-model="checkbox" content="no-cache">
           <span>记住密码</span>
         </label>
-        <a > 找回密码 </a>
+        <a @click.stop="retrieve"> 找回密码 </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import qs from 'qs';
 export default {
   name: 'login',
   data () {
@@ -48,35 +50,82 @@ export default {
       username: '',
       password: '',
       selened: true,
-      checkbox: false,
-      formText: {
+      checkbox: false
+    }
+  },
+  methods: {
+    regular (data) {
+      let reg = /\S/; 
+      let formText= {
         username: '请输入用户登录名！',
         password: '请输入用户登录密码！',
         email: '请输入联系邮箱！'
       }
-    }
-  },
-  methods: {
-    login () {
+      for (let key in data) {
+        if (!reg.test(data[key])) {
+          this.$message.error(formText[key])
+          return false;
+        }
+      }
+      if (data.password && data.password.length < 6) {
+        this.$message.error('密码长度不得小于6个字段！');
+        return false;
+      }
+      return true;
+    },
+    login () { // 登录
       let data = {
         username: this.username,
         password: this.password
       }
-
-      for (let key in data) {
-        if (!data[key]) {
-          return this.$message.error(this.formText[key])
-        }
-      }
+      if (!this.regular(data)) return false;
 
       this.$http.post('/login', data)
-      .then(data=> {
-        console.log('data=', data)
-      }).catch(err=> {
-        console.log('err=', err)
+      .then(({msg, text})=> {
+        msg == 'SUCCESS'
+        ? this.$router.push({path: '/home'})
+        : this.$message.error(text);
+      }).catch(err => {
+        this.$message.error('请求错误！');
       })
     },
-    register () {}
+    register () { // 用户注册
+      let data = {
+        email: this.email,
+        username: this.username,
+        password: this.password
+      }
+      if (!this.regular(data)) return false;
+
+      let reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      if (!reg.test(data.email)) {
+        this.$message.error('邮箱格式不正确！')
+      }
+
+      this.$http.post('/register', data)
+      .then(({msg, text})=> {
+        if (msg == 'SUCCESS') {
+          this.$message.success(text);
+        } else {
+          this.$message.error(text);
+        }
+      }).catch(err => {
+        this.$message.error('请求错误！');
+      })
+    },
+    retrieve () { // 找回密码
+      let data = { username: this.username };
+      if (!this.regular(data)) return false;
+
+      this.$http.post('/retrieve', data)
+      .then(({msg, text})=> {
+        msg == 'SUCCESS'
+        ? this.$message.success(text)
+        : this.$message.error(text);
+      }).catch(err=> {
+        this.$message.error('请求错误！');
+      })
+    }
   }
 }
 </script>

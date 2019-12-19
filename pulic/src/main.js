@@ -4,10 +4,10 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-import http from './http';
-
+import http from '.utils/http';
 import xhUi from './plugin';
 
+// import axios from 'axios';
 Vue.prototype.$http = http;
 
 

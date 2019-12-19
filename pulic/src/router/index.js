@@ -2,7 +2,6 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import login from '@/components/login.vue'
 
 Vue.use(VueRouter)
 const components = [];
@@ -12,6 +11,8 @@ requireComponent.keys().map(filePath => {
   let file = requireComponent(filePath);
   let fileName = file.default.name || file;
 
+  if (fileName == 'container') return;
+
   components.push({
     path: '/' + fileName,
     name: fileName,
@@ -19,23 +20,21 @@ requireComponent.keys().map(filePath => {
   })
 })
 
+console.log(components)
+
 const routes = [
   {
     name: 'login',
     path: '/',
-    component: login
-    // redirect: '/home'
-  },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // },
-  ...components
+    component: () => import('@/components/login.vue')
+  }, {
+    nmae: 'container',
+    path: '/container',
+    redirect: '/home',
+    component: () => import('@/views/home/index.vue'),
+    children: [...components]
+  }
 ]
-
-// console.log(components, 'components')
-// console.log(routes, 'routes')
 
 const router = new VueRouter({
   mode: 'hash',
@@ -43,4 +42,4 @@ const router = new VueRouter({
   routes
 })
 
-export default router
+export default router;
