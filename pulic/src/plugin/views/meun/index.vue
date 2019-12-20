@@ -1,7 +1,7 @@
 <template>
   <ul id="xl-meun" class="ul" :class ="[mode]">
     <template v-for="meun in meunData">
-      <xl-meun-item :key="meun[title]" v-if="!meun.child">
+      <xl-meun-item :key="meun[title]" v-if="!meun.child" @click.stop="clickFun(meun)">
         <router-link :to="meun[path]">{{meun[title]}}</router-link>
       </xl-meun-item>
 
@@ -43,6 +43,9 @@ export default {
       this.$refs.group.map(key => {
         key.isGroup = false
       })
+    },
+    clickFun (value) {
+      this.$emit('click', value)
     }
   }
 }

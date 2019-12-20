@@ -27,7 +27,7 @@ export default {
   name: 'xlTag',
   data () {
     return {
-      sele_Index: null,
+      sele_Index: 0,
       visible: false,
       meunClass: {},
       value: {},
@@ -61,7 +61,7 @@ export default {
     },
     noClose: {
       type: Number,
-      default: null
+      default: 0
     },
     isContextmenu: Boolean
   },

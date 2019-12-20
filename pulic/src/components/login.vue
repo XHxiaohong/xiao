@@ -82,17 +82,17 @@ export default {
 
       console.log(this.$store)
 
-      this.addMeun()
-      .then(data=> {
-        console.log(data)
-        this.getMeun()
-        .then(data=> {
-          console.log(data)
-        })
-        .catch(err=> {
-          console.log(err)
-        })
-      })
+      // this.addMeun()
+      // .then(data=> {
+      //   console.log(data)
+      //   this.getMeun()
+      //   .then(data=> {
+      //     console.log(data)
+      //   })
+      //   .catch(err=> {
+      //     console.log(err)
+      //   })
+      // })
 
       if (!this.regular(data)) return false;
 

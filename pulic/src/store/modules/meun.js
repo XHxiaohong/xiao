@@ -4,11 +4,14 @@ import http from '@/utils/http';
 // 配置菜单数据
 const meun = [{
 	name: '首页',
-	path: '/homes'
+	path: '/home'
+}, {
+	name: '菜单管理',
+	path: '/meun'
 }]
 
 const state = {
-	meun: []
+	meun: meun
 }
 
 const getters = {
