@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import qs from 'qs';
+import {mapGetters} from 'vuex';
 export default {
   name: 'login',
   data () {
@@ -54,6 +54,7 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(['getMeun', 'addMeun']),
     regular (data) {
       let reg = /\S/; 
       let formText= {
@@ -78,6 +79,21 @@ export default {
         username: this.username,
         password: this.password
       }
+
+      console.log(this.$store)
+
+      this.addMeun()
+      .then(data=> {
+        console.log(data)
+        this.getMeun()
+        .then(data=> {
+          console.log(data)
+        })
+        .catch(err=> {
+          console.log(err)
+        })
+      })
+
       if (!this.regular(data)) return false;
 
       this.$http.post('/login', data)
