@@ -1,11 +1,19 @@
 <template>
   <ul id="xl-meun" class="ul" :class ="[mode]">
     <template v-for="meun in meunData">
-      <xl-meun-item :key="meun[title]" v-if="!meun.child" @click.stop="clickFun(meun)">
-        <router-link :to="meun[path]">{{meun[title]}}</router-link>
+      <xl-meun-item :key="meun[title]" v-if="!meun.child">
+        <a :path='meun[path]'>{{meun[title]}}</a>
+        <!-- <router-link :to="meun[path]">{{meun[title]}}</router-link> -->
       </xl-meun-item>
 
-      <xl-meun-item-group v-else ref="group" :key="meun[title]" @myEvent="noGroup" :title="title" :path="path" :childData="meun"> </xl-meun-item-group>
+      <xl-meun-item-group 
+      v-else 
+      ref="group" 
+      :key="meun[title]" 
+      @myEvent="noGroup(meun)" 
+      :title="title" 
+      :path="path"
+      :childData="meun"> </xl-meun-item-group>
     </template>
   </ul>
 </template>
@@ -28,6 +36,10 @@ export default {
     mode: {
       type: String,
       default: 'vertical' // horizontal 
+    },
+    isRouter:{
+      type: Boolean,
+      default: true
     }
   },
   components: {
@@ -36,17 +48,23 @@ export default {
   },
   data () { return  {}},
   methods: {
-    log () {
-      console.log(this.meun)
-    },
     noGroup () {
       this.$refs.group.map(key => {
         key.isGroup = false
       })
-    },
-    clickFun (value) {
-      this.$emit('click', value)
     }
+  },
+  mounted () {
+    const ul = document.getElementById('xl-meun');
+    ul.addEventListener('click',  (ev)=> {
+      ev = ev || event;
+      const path = ev.target.getAttribute('path');
+      const value = ev.target.innerText;
+      if (path) {
+        this.$emit('click', value, path);
+        if (this.isRouter && this.$router.history.current.path !== path) this.$router.push({path})
+      }
+    })
   }
 }
 </script>

@@ -7,9 +7,10 @@ import store from './store';
 import http from './utils/http';
 import xhUi from './plugin';
 
+import '@/assets/icon/iconfont.css'
+
 // import axios from 'axios';
 Vue.prototype.$http = http;
-
 
 Vue.use(xhUi);
 Vue.config.productionTip = false;

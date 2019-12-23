@@ -20,12 +20,13 @@ requireComponent.keys().map(filePath => {
   })
 })
 
-console.log(components)
-
-const routes = [
-  {
-    name: 'login',
+const routes = [{
+    nmae: '/',
     path: '/',
+    redirect: '/login',
+  }, {
+    name: 'login',
+    path: '/login',
     component: () => import('@/components/login.vue')
   }, {
     nmae: 'container',
@@ -36,10 +37,26 @@ const routes = [
   }
 ]
 
+
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
+})
+
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  let isLogin = localStorage.getItem('isLogin');
+
+  if (to.path == '/login') {
+    next();
+    localStorage.removeItem('isLogin');
+  } else if (isLogin) {
+    next();
+  } else {
+    next(false);
+  }
 })
 
 export default router;

@@ -1,12 +1,13 @@
 <template>
   <li>
     <div @click="change" class="xl-meun-text"> 
-      <router-link :to="childData[path]">{{childData[title]}}</router-link>
+      <a :path='childData[path]'>{{childData[title]}}</a>
+      <!-- <router-link :to="childData[path]">{{childData[title]}}</router-link> -->
       <i class="xl-icon xl-icon-arrow-down" :class="isGroup? 'xl-icon-hover' : ''" v-if="childData.child"></i>
     </div>
     <ul v-if="childData.child" v-show="isGroup" class="xl-group"> 
       <template v-for="child in childData.child">
-        <xl-menu-item-group  ref="group"  @myEvent="noGroup" :key="child[title]" :title="title" :path="path" :childData="child"></xl-menu-item-group >
+        <xl-menu-item-group  ref="group" @myEvent="noGroup" :key="child[title]" :title="title" :path="path" :childData="child"></xl-menu-item-group >
       </template>
     </ul>
   </li>

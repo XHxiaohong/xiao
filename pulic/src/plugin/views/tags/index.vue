@@ -63,13 +63,21 @@ export default {
       type: Number,
       default: 0
     },
-    isContextmenu: Boolean
+    isContextmenu: Boolean,
+    isRouter: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {},
   methods: {
-    choice (value, index) {
+    choice (value, index, path) {
       this.sele_Index = index;
-      this.$emit('click', value, index)
+      this.$emit('click', value, index);
+
+      // if (this.isRouter) {
+      //   this.$router.push(path)
+      // }
     },
     close (value, index) {
       this.$emit('close', value, index);
@@ -108,6 +116,9 @@ export default {
   watch: {
     selection (value) {
       this.sele_Index = value <= 0 ? 0 : value;
+    },
+    tags (value) {
+      this.sele_Index = value.length - 1;
     }
   }
 }

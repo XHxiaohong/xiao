@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 export default {
   name: 'login',
   data () {
@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     ...mapGetters(['getMeun', 'addMeun']),
+    ...mapMutations(['setUserName']),
     regular (data) {
       let reg = /\S/; 
       let formText= {
@@ -79,28 +80,16 @@ export default {
         username: this.username,
         password: this.password
       }
-
-      console.log(this.$store)
-
-      // this.addMeun()
-      // .then(data=> {
-      //   console.log(data)
-      //   this.getMeun()
-      //   .then(data=> {
-      //     console.log(data)
-      //   })
-      //   .catch(err=> {
-      //     console.log(err)
-      //   })
-      // })
-
       if (!this.regular(data)) return false;
-
       this.$http.post('/login', data)
       .then(({msg, text})=> {
-        msg == 'SUCCESS'
-        ? this.$router.push({path: '/home'})
-        : this.$message.error(text);
+        if (msg == 'SUCCESS') {
+          this.setUserName(this.username);
+          localStorage.setItem('isLogin', true);
+          this.$router.push({path: '/home'});
+        } else {
+          this.$message.error(text);
+        }
       }).catch(err => {
         this.$message.error('请求错误！');
       })
@@ -142,7 +131,8 @@ export default {
         this.$message.error('请求错误！');
       })
     }
-  }
+  },
+  mounted () {}
 }
 </script>
 
@@ -163,7 +153,7 @@ export default {
   margin-right: 10%;
   background: rgba(251, 247, 247, .65);
   border-radius: 6px;
-  box-shadow: 2px 2px 2px 2px #afacac47;
+  box-shadow: 10px 10px 10px 10px rgba(255, 255, 255, .3);
   .xh-login-title {
     margin-bottom: 20px;
     border-bottom: 2px solid @border;; 

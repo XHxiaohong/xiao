@@ -24,4 +24,7 @@ html, body, #app,
   height: 100%;
   overflow: hidden;
 }
+ul {
+  list-style-type: none;
+}
 </style>
