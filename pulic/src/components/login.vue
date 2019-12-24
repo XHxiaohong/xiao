@@ -8,19 +8,19 @@
 
 
       <div class="xh-input-box">
-        <i class="xh-ioc xh-ioc-yonghu1"></i>
+        <i class="xh-ioc xh-icon-yonghu1"></i>
         <input type="text" name="usernmae" v-model="username" content="no-cache" 
         maxlength = "32" placeholder="请输入密码">
       </div>
 
       <div class="xh-input-box">
-        <i class="xh-ioc xh-ioc-mima1" ></i>
+        <i class="xh-ioc xh-icon-mima1" ></i>
         <input type="password" name="password" maxlength = "32"
         v-model="password" autocomplete="new-password" placeholder="密码长度在6-32位字符之间">
       </div>
 
       <div class="xh-input-box" v-show="!selened">
-        <i class="xh-ioc xh-ioc-youxiang3"></i>
+        <i class="xh-ioc xh-icon-youxiang3"></i>
         <input type="email" name="email" v-model="email" placeholder="请输入用户邮箱！" content="no-cache">
       </div>
 

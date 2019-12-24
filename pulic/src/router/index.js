@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -37,13 +36,11 @@ const routes = [{
   }
 ]
 
-
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
-
 
 // 路由守卫
 router.beforeEach((to, from, next) => {

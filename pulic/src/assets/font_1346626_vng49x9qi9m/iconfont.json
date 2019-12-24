@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "604757",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e786",
+      "unicode_decimal": 59270
+    },
+    {
       "icon_id": "1048223",
       "name": "支付 (1)",
       "font_class": "zhifu1",
@@ -46,6 +53,13 @@
       "font_class": "layer",
       "unicode": "e611",
       "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "10427742",
+      "name": "设 置",
+      "font_class": "shezhi",
+      "unicode": "e6c1",
+      "unicode_decimal": 59073
     },
     {
       "icon_id": "11207315",

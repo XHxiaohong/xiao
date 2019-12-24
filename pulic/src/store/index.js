@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import http from '@/utils/http';
 
 import meun from './modules/meun'
+import journalism from './modules/journalism'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    meun
+    meun,
+    journalism
   },
   getters: {
     // getMeun: (state)=> {

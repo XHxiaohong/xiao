@@ -7,7 +7,6 @@
   url('iconfont.svg?t=1577157778442#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -16,118 +15,107 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="xh-icon"],
-[class*=" xh-icon"] {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-.xh-icon-shuaxin:before {
+.xl-icon-shuaxin:before {
   content: "\e786";
 }
 
-
-.xh-icon-shezhi:before {
-  content: "\e6c1";
-}
-
-.xh-icon-zhifu1:before {
+.xl-icon-zhifu1:before {
   content: "\e6af";
 }
 
-.xh-icon-rili:before {
+.xl-icon-rili:before {
   content: "\e600";
 }
 
-.xh-icon-tuihuo:before {
+.xl-icon-tuihuo:before {
   content: "\e6a1";
 }
 
-.xh-icon-quxiaodingdan:before {
+.xl-icon-quxiaodingdan:before {
   content: "\e643";
 }
 
-.xh-icon-youxiang3:before {
+.xl-icon-youxiang3:before {
   content: "\e612";
 }
 
-.xh-icon-layer:before {
+.xl-icon-layer:before {
   content: "\e611";
 }
 
-.xh-icon-yonghu1:before {
+.xl-icon-shezhi:before {
+  content: "\e6c1";
+}
+
+.xl-icon-yonghu1:before {
   content: "\e604";
 }
 
-.xh-icon-arrow-down:before {
+.xl-icon-arrow-down:before {
   content: "\e6eb";
 }
 
-.xh-icon-arrow-right:before {
+.xl-icon-arrow-right:before {
   content: "\e6ec";
 }
 
-.xh-icon-Notvisible:before {
+.xl-icon-Notvisible:before {
   content: "\e6fe";
 }
 
-.xh-icon-play:before {
+.xl-icon-play:before {
   content: "\e701";
 }
 
-.xh-icon-arrow-right1:before {
+.xl-icon-arrow-right1:before {
   content: "\e743";
 }
 
-.xh-icon-arrow-lift:before {
+.xl-icon-arrow-lift:before {
   content: "\e744";
 }
 
-.xh-icon-close:before {
+.xl-icon-close:before {
   content: "\e747";
 }
 
-.xh-icon-double-arro-right:before {
+.xl-icon-double-arro-right:before {
   content: "\e74c";
 }
 
-.xh-icon-double-arrow-left:before {
+.xl-icon-double-arrow-left:before {
   content: "\e74d";
 }
 
-.xh-icon-help:before {
+.xl-icon-help:before {
   content: "\e752";
 }
 
-.xh-icon-leftbutton:before {
+.xl-icon-leftbutton:before {
   content: "\e755";
 }
 
-.xh-icon-loading:before {
+.xl-icon-loading:before {
   content: "\e756";
 }
 
-.xh-icon-reeor-fill:before {
+.xl-icon-reeor-fill:before {
   content: "\e789";
 }
 
-.xh-icon-prompt-fill:before {
+.xl-icon-prompt-fill:before {
   content: "\e788";
 }
 
-.xh-icon-success-fill:before {
+.xl-icon-success-fill:before {
   content: "\e78d";
 }
 
-.xh-icon-warning-fill:before {
+.xl-icon-warning-fill:before {
   content: "\e790";
 }
 
-.xh-icon-mima1:before {
+.xl-icon-mima1:before {
   content: "\ed6a";
 }
 
