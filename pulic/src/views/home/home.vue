@@ -13,6 +13,11 @@
     </ul>
 
     <div class="xh-container">
+
+      <div class="center"> 
+        —————————————————————— 仿百度首页（功能为实现） ———————————————————————— 
+      </div>
+
       <div class="xh-content-title">
         <ul class="xh-content-title-ul">
           <template v-for="item in titleList">
@@ -24,7 +29,16 @@
       </div>
 
       <div class="xh-content-itme">
-
+        <template v-for="item in content">
+          <!-- {{}} -->
+          <content-item 
+          :title="item.title" 
+          :imgUrl="item.imgUrl" 
+          :author="item.author" 
+          :time="item.time" 
+          :key="item.autho + item.time"> </content-item>
+        </template>
+   
       </div>
 
       <div class="xh-content-Journalism">
@@ -42,16 +56,12 @@
         </ul>
       </div>
     </div>
-
-    <!-- <div class="xh-container">
-      <div class="xh-content-itme"></div>
-      <div class="xh-content-itme margin-left"></div>
-    </div> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState} from 'vuex'
+import contentItem from '@/components/hoem-content-item.vue'
 export default {
   name: 'home',
   data() {
@@ -65,20 +75,28 @@ export default {
       seleTitle: '推荐',
       titleList: ['推荐', '话题', '分享', '专区'],
       labelList: ['热点', '娱乐', '直播', '视频'],
-      Journalism: []
+      Journalism: [],
+      content: []
     }
+  },
+  components: {
+    contentItem
+  },
+  computed: {
+    ...mapState({
+      homeContent: state => state.journalism.homeContent,
+    })
   },
   methods: {
     ...mapGetters(['getJList']),
     getJournalism () {
-      // console.log(this.$store.getters.getJList(), 123)
-      // console.log(this.getJList(), 123)
       this.Journalism = this.getJList()();
     }
   },
   mounted () {
     this.getJournalism();
-    // console.log(, 123)
+    this.content = this.homeContent
+    // console.log(this.count, 123)
     // console.log(this.$store.state)
   }
 }
@@ -130,17 +148,27 @@ export default {
 
   .xh-container {
     width: 100%;
+    flex: 1;
     margin-top: 20px;
     font-size: 14px;
     background: #ffffff;
+    position: relative;
     overflow: auto;
+
+    .center {
+      color: #808080;
+      text-align: center;
+      padding: 5px 0;
+      border-bottom: 1px solid #ccc; 
+    }
 
     .xh-content-title {
       width: 100%;
       height: 30px;
       margin-bottom: 20px;
       border-bottom: 1px solid #bbb;
-      position: relative;
+      // position: fixed;
+      // background: #ffffff;
 
       .xh-icon {
         width: 30px;
@@ -175,21 +203,24 @@ export default {
 
 
     .xh-content-itme {
-      width: 70%;
+      width: calc(100% - 400px);
       height: 20px;
+      // padding-top: 40px;
       display: inline-block;
     }
 
     .xh-content-Journalism {
       width: 30%;
       display: inline-block;
+      margin-left: 50px;
+      position: fixed;
 
       .xh-content-title {
-        width: calc(100% - 30px);
+        width: 300px;
         height: 30px;
         display: flex;
         border: none;
-        margin: 0;
+        margin: 0px;
         padding: 0 15px;
         justify-content: space-between;
 

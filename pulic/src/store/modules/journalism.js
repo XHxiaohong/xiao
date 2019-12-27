@@ -38,9 +38,32 @@ const list = [
   'VG 夺冠'
 ]
 
+const homeContent = [{
+  title: '日本政府决定向中东派遣自卫队',
+  author: '观察者网',
+  time: '12-27 09:15',
+  imgUrl: ['/images/1.jpeg']
+}, {
+  title: '独家｜第二个被终身监禁的银行董事长：姜喜运的恒丰银行往事',
+  author: '第一财经',
+  time: '12-26 21:40',
+  imgUrl: []
+}, {
+  title: '猛然放宽城市落户限制，农民拔根成“伪中产”？',
+  author: '观察者网',
+  time: '12-27 08:33',
+  imgUrl: ['/images/2.jpeg']
+}, {
+  title: '还有4天过年！这十件大事你还没看懂吗？',
+  author: '中国经营报',
+  time: '12-27 09:41',
+  imgUrl: ['/images/3.jpeg', '/images/4.jpeg', '/images/5.jpeg']
+}]
+
 const state = {
   j_index: 0,
-	journalism: list
+  journalism: list,
+  homeContent
 }
 
 const getters = {

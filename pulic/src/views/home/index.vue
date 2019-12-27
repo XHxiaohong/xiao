@@ -17,7 +17,7 @@
         <ul class="xh-top-nav">
           <!-- <li></li>
           <li></li> -->
-          <li class="xh-nav-item">个人中心</li>
+          <li class="xh-nav-item" @click="router">个人中心</li>
           <li class="xh-nav-item" @click.stop="signOut">安全退出</li>
           <li class="xh-nav-user">
             <img src="/images/user.png" alt="" class="xh-user_img">
@@ -85,6 +85,11 @@ export default {
         this.selection = this.tags.indexOf(value);
       }
     },
+    router () {
+      // if (!this.include.includes(path)) {return false}
+      this.selend('个人中心' ,'/userCenter');
+      this.$router.push({path: '/userCenter'});
+    },
     selendTag(value, index) {
       if (index != this.selection) {
         this.selection = index;
@@ -95,6 +100,9 @@ export default {
       this.tags.splice(index, 1);
       this.include.splice(index, 1);
 
+      let path = '/' + this.include[this.include.length - 1];
+      
+      this.$router.push({path: path});
       localStorage.setItem('tags', JSON.stringify(this.tags));
       localStorage.setItem('include', JSON.stringify(this.include));
     },

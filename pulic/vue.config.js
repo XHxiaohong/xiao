@@ -8,7 +8,7 @@ module.exports = {
   devServer:{
       open: false,//是否自动弹出
       host: 'localhost',
-      port: 8081,//端口
+      port: 8181,//端口
       https: false,
       hotOnly: false,//热更新
   },
