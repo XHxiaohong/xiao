@@ -26,6 +26,9 @@ export default new Vuex.Store({
     journalism
   },
   getters: {
+    userImg (state, url) {
+
+    }
     // getMeun: (state)=> {
     //   return new Promise((resolve, reject)=> {
     //     http.post('/meun/list', {page: 0, size: 25})

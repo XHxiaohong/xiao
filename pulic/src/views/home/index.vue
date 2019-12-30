@@ -8,7 +8,6 @@
       title="name" 
       @click="selend"
       class="xh-meun"></xl-meun>
-      
     </div>
 
     <div class="xh-content">
@@ -20,7 +19,7 @@
           <li class="xh-nav-item" @click="router">个人中心</li>
           <li class="xh-nav-item" @click.stop="signOut">安全退出</li>
           <li class="xh-nav-user">
-            <img src="/images/user.png" alt="" class="xh-user_img">
+            <img :src="userImg" alt="" class="xh-user_img">
             <div  class="xh-user-text">
               <span>{{userName}}</span>
 
@@ -69,7 +68,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['meun', 'userName'])
+    ...mapState(['meun', 'userName']),
+    userImg () {
+      return '/public/images/user.png'
+    }
   },
   methods: {
     selend (value, path) {

@@ -76,11 +76,10 @@ export default {
 
       if (fileList == undefined) return false;
 
+      formData.append("username", this.userName);
       for (let file of fileList) {
         formData.append("file", file);
       }
-
-      // formData.username = this.userName;
 
       this.$http.post("/user/uploadImg", formData, {
           onUploadProgress: function(Event) {
