@@ -97,3 +97,5 @@ function a () {
     reslove()
   })
 }
+
+// console.log( 109.5 / 73 );

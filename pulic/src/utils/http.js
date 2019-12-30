@@ -6,15 +6,18 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://127.0.0.1:8080';
 
 // 处理post请求的查询字符串
-axios.defaults.headers = {'content-type': 'application/x-www-form-urlencoded'}
+// axios.defaults.headers = {'content-type': 'application/x-www-form-urlencoded'}
 axios.defaults.transformRequest = [(data) => {
-  return  typeof data  == 'object' ? qs.stringify(data) : data;
+  return Object.prototype.toString.call(data) != '[object FormData]' ? qs.stringify(data) : data;
 }]
 
 
 // 请求发送拦截器
 axios.interceptors.request.use(
   config => {
+    // if(config.method === 'post') {
+    //   config.data = qs.parse(config.data)
+    // }
     return config
   },
   error => {

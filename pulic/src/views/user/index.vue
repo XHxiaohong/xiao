@@ -4,7 +4,12 @@
       <img :src="imgUrl" alt="用户头像" />
       <h3>{{name}}</h3>
       <span>注册日期： {{date}}</span>
-      <button class="update">修改头像</button>
+
+      <button class="submit">
+        修改头像
+        <!-- 多文件 multiple="multiple" -->
+        <input type="file" class="file" value @change="uploadImg" />
+      </button>
 
       <span class="title">信息绑定</span>
 
@@ -31,6 +36,7 @@
 
 <script>
 import { mapState } from "vuex";
+// import axios from "vuex";
 export default {
   name: "userCenter",
   data() {
@@ -51,13 +57,51 @@ export default {
       this.$http
         .get(url)
         .then(({ msg, data }) => {
-          console.log(msg);
-          console.log(data);
           this.email = data.email;
           this.phone = data.telephone;
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
+          this.$message({
+            type: "error",
+            message: "获取数据失败！",
+            duration: 5000
+          });
+        });
+    },
+    uploadImg(e) {
+      // 上传头像
+      let formData = new FormData();
+      let fileList = e.target.files;
+
+      if (fileList == undefined) return false;
+
+      for (let file of fileList) {
+        formData.append("file", file);
+      }
+
+      // formData.username = this.userName;
+
+      this.$http.post("/user/uploadImg", formData, {
+          onUploadProgress: function(Event) {
+            console.log(Event, Event.lengthComputable)
+            if (Event.lengthComputable) {
+              let percent = Math.round((Event.loaded * 100) / Event.total).toFixed(2) + "%";
+              // _this.loading_text = "正在上传，已上传" + percent;
+
+              console.log(percent)
+            }
+          }
+        })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          this.$message({
+            type: "error",
+            message: "图像上传失败！",
+            duration: 5000
+          });
         });
     },
     phoneFun() {
@@ -68,16 +112,16 @@ export default {
       this.$http
         .post("/user/telephone", data)
         .then(({ msg, data }) => {
-           this.$message({
-            type: 'success',
-            message: '绑定手机成功！',
+          this.$message({
+            type: "success",
+            message: "绑定手机成功！",
             duration: 5000
           });
         })
         .catch(err => {
           this.$message({
-            type: 'error',
-            message: '绑定手机失败！',
+            type: "error",
+            message: "绑定手机失败！",
             duration: 5000
           });
         });
@@ -138,13 +182,22 @@ export default {
     width: 40%;
     padding-top: 20px;
     border-right: 1px solid #aaa;
-    .update {
+    .submit {
+      width: 80px;
       display: block;
       padding: 2px 8px;
       background: #fff;
       color: #57c5f7;
       border: 1px solid #57c5f7;
       margin: 8px auto;
+      overflow: hidden;
+      position: relative;
+      .file {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
     }
   }
   .update_button {
@@ -152,7 +205,6 @@ export default {
     height: 30px;
     color: #fff;
     margin-top: 10px;
-    // margin-left: 60px;
     border: none;
     outline: none;
     border-radius: 3px;
