@@ -45,7 +45,8 @@
         </xl-from-itme>
 
         <xl-from-itme label="生日" class="xl-from-itme">
-          <xl-date-pilcker class="xl-from-date" v-model="birthday" placeholder="请选择出生日期"></xl-date-pilcker>
+          <xl-date-pilcker class="xl-from-date" v-model="birthday"
+          placeholder="请选择出生日期"></xl-date-pilcker>
         </xl-from-itme>
 
         <xl-from-itme label="地址" class="xl-from-itme">
@@ -176,8 +177,8 @@ export default {
   },
   watch: {
     userImg(value) {},
-    username(value) {
-      console.log(value);
+    birthday(val) {
+      console.log(val, 'birthday');
     }
   }
 };

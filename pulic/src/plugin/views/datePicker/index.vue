@@ -10,7 +10,7 @@
        :placeholder="placeholder"
       >
       <i v-if="clearable"
-      v-show="dateValue" 
+      v-show="dateValue !== ''" 
       @click="dateValue = ''" 
       class="xl-icon xl-icon-reeor-fill"></i>
     </div>
@@ -60,7 +60,7 @@ export default {
       type: Boolean,
       default: true
     },
-    value: {},
+    // value: {},
     defaultValue: {
       type: String,
       default: ''
@@ -176,7 +176,8 @@ export default {
       let m = this.Month = date.getMonth() + 1;
       let d = this.Day = date.getDate();
       let str1 = `${y}-${m}-${d}`;
-      let str2 = `${y}-${m < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
+
+      let str2 = `${y}-${m*1 < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
 
       str1 == this.defaultValue || this.defaultValue == str2
       ? this.setValue(this.defaultValue)
@@ -185,11 +186,14 @@ export default {
     setValue (val) {
       if (val == '') return;
       var dateArr = val.split('-').map(num => {
-        return num >= 10 ? + num : ('0' + num)
+        if (num.length >= 2) return num;
+        return num * 1 >= 10  ? + num : ('0' + num)
       })
+      
       this.Year = dateArr[0];
       this.Month = dateArr[1];
       this.Day = dateArr[2];
+
       this.dateValue = dateArr.join('-');
     },
     handleYear (ber) {
@@ -216,12 +220,8 @@ export default {
   mounted () {
     this.initValue();
     this.initDate();
-    // console.log(this.valueFormat)
   },
   watch: {
-    value (val) {
-      this.setValue(val)
-    },
     dateValue (val) {
       this.$emit('input', val)
     }
