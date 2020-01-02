@@ -68,10 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['meun', 'userName']),
-    userImg () {
-      return '/public/images/user.png'
-    }
+    ...mapState(['meun', 'userName', 'userImg']),
   },
   methods: {
     selend (value, path) {
@@ -81,8 +78,8 @@ export default {
         this.include.push(path);
         this.selection = this.tags.length - 1;
 
-        localStorage.setItem('tags', JSON.stringify(this.tags));
-        localStorage.setItem('include', JSON.stringify(this.include));
+        sessionStorage.setItem('tags', JSON.stringify(this.tags));
+        sessionStorage.setItem('include', JSON.stringify(this.include));
       } else {
         this.selection = this.tags.indexOf(value);
       }
@@ -105,8 +102,8 @@ export default {
       let path = '/' + this.include[this.include.length - 1];
       
       this.$router.push({path: path});
-      localStorage.setItem('tags', JSON.stringify(this.tags));
-      localStorage.setItem('include', JSON.stringify(this.include));
+      sessionStorage.setItem('tags', JSON.stringify(this.tags));
+      sessionStorage.setItem('include', JSON.stringify(this.include));
     },
     signOut () {
       this.$router.push({path: '/login'});
@@ -132,11 +129,14 @@ export default {
       this.getDate();
     }, 1000)
 
-    let tags = localStorage.getItem('tags');
-    let include = localStorage.getItem('include');
+    let tags = sessionStorage.getItem('tags');
+    let include = sessionStorage.getItem('include');
 
     this.tags = JSON.parse(tags) || ['首页'],
     this.include = JSON.parse(include) || ['home']
+
+    console.log(this.userName, this.userImg, 234)
+    console.log(this.$store.state)
   }
 }
 </script>

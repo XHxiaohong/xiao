@@ -18,10 +18,9 @@ let MessageBox = (options) => {
   document.body.appendChild(instance.vm.$el);
   instance.vm.visible = true;
 
-  // console.log(instance)
+  // 关闭页面，返回信息
   return new Promise ((resolve, reject) => {
     options.onClose = function(value = false) {
-      console.log(value, 'value')
       value === false ? reject(value) : resolve(value);
     }
   })
@@ -34,6 +33,7 @@ MessageBox.alert = (message, title, options) => {
   } else if (title  === undefined) {
     title = ''
   }
+
   return MessageBox({
     ...options,
     type: 'alert',

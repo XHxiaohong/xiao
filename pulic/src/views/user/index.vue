@@ -1,14 +1,14 @@
 <template>
   <div class="container" id="user">
     <div class="left">
-      <img :src="imgUrl" alt="用户头像" />
+      <img :src="userImg" alt="用户头像" class="userImg" />
       <h3>{{name}}</h3>
       <span>注册日期： {{date}}</span>
 
       <button class="submit">
         修改头像
         <!-- 多文件 multiple="multiple" -->
-        <input type="file" class="file" value @change="uploadImg" />
+        <input type="file" class="file" id="userImg" @change="uploadImg" />
       </button>
 
       <span class="title">信息绑定</span>
@@ -30,12 +30,41 @@
 
     <div class="right">
       <span class="title">个人信息</span>
+
+      <xl-from labelWidth="65px" class="xh-from">
+        <xl-from-itme label="用户名" class="xl-from-itme">
+          <xl-input v-model="username" placeholder="请输入用户名" />
+        </xl-from-itme>
+
+        <xl-from-itme label="真实姓名" class="xl-from-itme">
+          <xl-input v-model="name" placeholder="请输入真实姓名" />
+        </xl-from-itme>
+
+        <xl-from-itme label="性别" class="xl-from-itme">
+          <xl-input v-model="username" placeholder="请输入用户性别" />
+        </xl-from-itme>
+
+        <xl-from-itme label="生日" class="xl-from-itme">
+          <xl-date-pilcker class="xl-from-date" v-model="birthday" placeholder="请选择出生日期"></xl-date-pilcker>
+        </xl-from-itme>
+
+        <xl-from-itme label="地址" class="xl-from-itme">
+          <xl-input v-model="username" placeholder="请输入用户地址" />
+        </xl-from-itme>
+
+        <xl-from-itme label="个性签名" class="xl-from-itme">
+          <xl-input v-model="username" placeholder="请输入个性签名" />
+        </xl-from-itme>
+
+      </xl-from>
+
+      <button class="save_button" @click="save">保存</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 // import axios from "vuex";
 export default {
   name: "userCenter",
@@ -45,13 +74,17 @@ export default {
       date: "",
       phone: "",
       email: "",
-      imgUrl: "/images/user.png"
+      username: "",
+      birthday: '',
+      value: null
     };
   },
+  inject: ["reload"],
   computed: {
-    ...mapState(["meun", "userName"])
+    ...mapState(["meun", "userName", "userImg"])
   },
   methods: {
+    ...mapMutations(["setUserImg"]),
     getList() {
       let url = `/user/list?username=${this.userName}`;
       this.$http
@@ -81,26 +114,35 @@ export default {
         formData.append("file", file);
       }
 
-      this.$http.post("/user/uploadImg", formData, {
-          onUploadProgress: function(Event) {
-            console.log(Event, Event.lengthComputable)
-            if (Event.lengthComputable) {
-              let percent = Math.round((Event.loaded * 100) / Event.total).toFixed(2) + "%";
-              // _this.loading_text = "正在上传，已上传" + percent;
+      document.getElementById("userImg").value = "";
 
-              console.log(percent)
-            }
-          }
-        })
-        .then(data => {
-          console.log(data);
+      this.$confirm("是否修改头像?", "修改头像", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(value => {
+          if (!value) return (this.value = null);
+          this.$http
+            .post("/user/uploadImg", formData)
+            .then(({ msg, url, text }) => {
+              if (msg == "success") {
+                this.$message.success(text);
+                this.$nextTick(() => {
+                  this.setUserImg(url);
+                });
+              }
+            })
+            .catch(err => {
+              this.$message({
+                type: "error",
+                message: "图像上传失败！",
+                duration: 5000
+              });
+            });
         })
         .catch(err => {
-          this.$message({
-            type: "error",
-            message: "图像上传失败！",
-            duration: 5000
-          });
+          console.log(err);
         });
     },
     phoneFun() {
@@ -124,15 +166,34 @@ export default {
             duration: 5000
           });
         });
+    },
+    save () {
+      this.birthday = ''
     }
   },
   mounted() {
     this.getList();
+  },
+  watch: {
+    userImg(value) {},
+    username(value) {
+      console.log(value);
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.button {
+  height: 30px;
+  color: #fff;
+  margin: auto;
+  display: block;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
 .container {
   padding-top: 60px;
   text-align: center;
@@ -149,6 +210,7 @@ export default {
     .button {
       // margin-right: -60px;
       color: #ffffff;
+      display: inline-block;
       border: 1px solid #47cb89;
       padding: 2px 5px;
       background: #47cb89;
@@ -181,6 +243,13 @@ export default {
     width: 40%;
     padding-top: 20px;
     border-right: 1px solid #aaa;
+    .userImg {
+      width: 130px;
+      height: 130px;
+      display: block;
+      margin: auto;
+      border-radius: 50%;
+    }
     .submit {
       width: 80px;
       display: block;
@@ -200,18 +269,41 @@ export default {
     }
   }
   .update_button {
+    .button;
     width: 294px;
-    height: 30px;
-    color: #fff;
-    margin-top: 10px;
-    border: none;
-    outline: none;
-    border-radius: 3px;
+    letter-spacing: 2px;
     background: #f16643;
   }
 
   .right {
     flex: 1;
+    text-align: left;
+    .user_input_box {
+      span {
+        width: 120px;
+        text-align: right;
+        display: inline-block;
+      }
+    }
+  }
+  .xh-from {
+    width: 80%;
+    padding-top: 20px;
+    margin: auto;
+    margin-bottom: 30px;
+    .xl-from-itme {
+      width: 90%;
+      margin-bottom: 20px
+    }
+    .xl-from-date {
+       width: 100%;
+    }
+  }
+  .save_button {
+    .button;
+    width: 65%;
+    letter-spacing: 5px;
+    background: #57a3f3;
   }
 }
 </style>

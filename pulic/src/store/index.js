@@ -11,12 +11,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userName: localStorage.getItem('userName') || ''
+    userName: sessionStorage.getItem('userName') || '',
+    userImg: sessionStorage.getItem('imgUrl') || ''
   },
   mutations: {
     setUserName (state, value) {
       state.userName = value ;
-      localStorage.setItem('userName', value);
+      sessionStorage.setItem('userName', value);
+    },
+    setUserImg (state, url) {
+      state.userImg = window.baseURL;
+      state.userImg += url;
+      sessionStorage.setItem('imgUrl', state.userImg);
+
+      console.log(url, state.userImg);
     }
   },
   actions: {
@@ -25,16 +33,5 @@ export default new Vuex.Store({
     meun,
     journalism
   },
-  getters: {
-    userImg (state, url) {
-
-    }
-    // getMeun: (state)=> {
-    //   return new Promise((resolve, reject)=> {
-    //     http.post('/meun/list', {page: 0, size: 25})
-    //     .then(data=> { resolve(data) })
-    //     .catch(err=> { reject(err) })
-    //   })
-    // }
-  }
+  getters: {}
 })

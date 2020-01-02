@@ -21,8 +21,8 @@
         </div>
 
         <div class="xl-button__box">
-          <button v-if="cancel" @click="close(false)">{{cancel}}</button>
-          <button v-if="confirm" @click="isConfirmFun()">{{confirm}}</button>
+          <button v-if="cancelButtonText" @click="close(false)">{{cancelButtonText}}</button>
+          <button v-if="confirmButtonText" @click="isConfirmFun()">{{confirmButtonText}}</button>
         </div>
       </div>  
     </transition>
@@ -37,8 +37,8 @@ export default {
     return {
       title: '',
       type: 'alert',
-      confirm: '',
-      cancel: '',
+      cancelButtonText: '',
+      confirmButtonText: '',
       inputValue: '',
       showInput: false,
       isError: false,
@@ -69,7 +69,6 @@ export default {
       this.onClose && this.onClose(ber);
     },
     valueTest () {
-      console.log(this.inputValue, this.inputPattern.test(this.inputValue))
       this.isError = !this.inputPattern.test(this.inputValue)
     }
   }

@@ -166,7 +166,7 @@ export default {
       } else if (val.class == 'xl-date-future' ) {
         this.future(val.day);
       } else {
-         this.setValue(`${this.Year}-${this.Month}-${val.day}`);
+        this.setValue(`${this.Year}-${this.Month}-${val.day}`);
       }
       this.isShowDate = false;
     },

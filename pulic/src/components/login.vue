@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     ...mapGetters(['getMeun', 'addMeun']),
-    ...mapMutations(['setUserName']),
+    ...mapMutations(['setUserName', 'setUserImg']),
     regular (data) {
       let reg = /\S/; 
       let formText= {
@@ -82,10 +82,12 @@ export default {
       }
       if (!this.regular(data)) return false;
       this.$http.post('/login', data)
-      .then(({msg, text})=> {
+      .then(({msg, text, data})=> {
         if (msg == 'SUCCESS') {
           this.setUserName(this.username);
-          localStorage.setItem('isLogin', true);
+          this.setUserImg(data[0].imgUrl);
+
+          sessionStorage.setItem('isLogin', true);
           this.$router.push({path: '/home'});
         } else {
           this.$message.error(text);
