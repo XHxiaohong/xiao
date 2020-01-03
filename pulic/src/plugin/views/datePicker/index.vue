@@ -66,7 +66,6 @@
           </template>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
@@ -83,7 +82,7 @@ export default {
       type: Boolean,
       default: true
     },
-    // value: {},
+    value: String,
     defaultValue: {
       type: String,
       default: ''
@@ -91,6 +90,10 @@ export default {
     editable: {
       type: Boolean,
       default: true
+    },
+    format: {
+      type: String,
+      default: 'yyyy-mm-dd'
     }
   },
   directives: {
@@ -122,117 +125,77 @@ export default {
       listMonth
     }
   },
-  // computed: {
-  //   handleValue () {
-  //     return this.dateValue
-  //   }
-  // },
+  computed: {
+    isFormat () {
+      let reg1 = /^y{4}-m{1,2}-d{1,2}$/;
+      let reg2 = /^Y{4}-M{1,2}-D{1,2}$/;
+      if (reg2.test(this.format) || reg1.test(this.format)) {
+        let format = this.format.split('-').map(key=> {
+          return key.length
+        })
+        return format;
+      } else {
+        return [4,2,2]
+      }
+    }
+  },
   methods: {
     onSelection (ele) {
       this.isShowDate = true
     },
     showDate () {
       this.isShowDate = true;
-      this.initDate();
+      this.initDate()
     },
-    initDate (y, m, d) {
-      let date;
-      this.listDate = [];
-      if (this.dateValue == '' ) {
-        date = new Date()
-        this.Year = y = date.getFullYear();
-        this.Month = m = date.getMonth() + 1;
-        this.Day = d = date.getDate();
-      } else {
-        y = y || this.Year;
-        m = m || this.Month;
-        d = d || this.Day;
-        date = new Date(y, m - 1, d); // Date 函数月份从零开始计数，故减一
-      }
-      this.getDate(y, m, d);
-    },
-    getDate (y, m, d) {
-      let Day = (new Date(y, m - 1, 0)).getDate(); // 上个月最后一天也即每月多少天
-      let firstDay = (new Date(y, m - 1, 1)).getDate(); // 每月第一天
-      let lastDay  = (new Date(y, m, 0)).getDate(); // 每月最后一天也即每月多少天
-      let firstDayisWhat = (new Date(y, m - 1, 1)).getDay(); // 第一天星期几0-6（星期日到星期六）
-
-      for (var i = -firstDayisWhat; i < 42 - firstDayisWhat; i++) {
-        if (i < 0) { // 上一个月
-          this.listDate.push({
-            day: Day + i + 1,
-            class: 'xl-date-pastTimes'
-          })
-        } else if (i < lastDay) { // 这个月
-          this.listDate.push({
-            day: i + 1,
-            class: i + 1 == d ? 'xl-date-selection' : ''
-          })
-        } else { // 下一个月
-          this.listDate.push({
-            day: i + 1 - lastDay,
-            class: 'xl-date-future'
-          })
+    initValue (date) {
+      let srtArr = [];
+      date.split('-').forEach((val, i) => {
+        if (val * 1 > 10) {
+          srtArr.push(val)
+        } else if (val.length == this.isFormat[i]) {
+          srtArr.push(val)
+        } else if (val.length > this.isFormat[i]) {
+          srtArr.push(parseInt(val))
+        } else {
+          srtArr.push('0' + val)
         }
+      });
+      this.dateValue = srtArr.join('-');
+    },
+    initDate () { // 初始化时间下拉 年、月、日
+      let date = this.dateValue ? new Date(this.dateValue) :new Date();
+      this.Year = date.getFullYear();
+      this.Month = date.getMonth() + 1; // Date 函数月份从零开始计数，故加一
+      this.Day = date.getDate();
+      this.initListDate();
+    },
+    initListDate (y = this.Year, m = this.Month, d = this.Day) { // 初始化时间下拉选择列表
+      let Day = (new Date(y, m - 1, 0)).getDate(); // 上个月最后一天
+      let firstDay = (new Date(y, m - 1, 1)).getDate(); // 每月第一天
+      let lastDay = (new Date(y, m, 0)).getDate(); // 每月最后一天, 即每月多少天
+      let firstDayisWhat = (new Date(y, m - 1, 1)).getDay(); // 第一天星期几
+
+      this.listDate = []
+      for (var i = -firstDayisWhat; i < 42 - firstDayisWhat; i++) {
+        let obj = {}
+        if (i < 0) { // 上一个月
+          obj.day = Day + i
+          obj.class = 'xl-date-pastTimes'
+        } else if (i < lastDay) { // 这个月
+          obj.day = i + 1,
+          obj.class = i + 1 == d ? 'xl-date-selection' : ''
+        } else { // 下一个月
+          obj.day = i + 1 - lastDay
+          obj.class = 'xl-date-future'
+        }
+        this.listDate.push(obj)
       }
     },
-    pastTimes(val) {
-      val = val || this.Day;
-      let str = this.Month - 1 < 1
-                ? `${this.Year - 1 }-12-${val}`
-                : `${this.Year}-${this.Month - 1}-${val}`;
-
-      this.setValue(str);
+     handleYear (ber) { // 加减年
+      ber ? --this.Year : ++this.Year;
+      this.initListDate();
     },
-    future (val) {
-      val = val || this.Day;
-      let str = this.Month + 1 > 12
-                ? `${this.Year + 1 }-1-${val}`
-                : `${this.Year}-${this.Month + 1}-${val}`;
-
-      this.setValue(str);
-    },
-    selection (val) {
-      if (val.class == 'xl-date-pastTimes' ) {
-        this.pastTimes(val.day)
-      } else if (val.class == 'xl-date-future' ) {
-        this.future(val.day);
-      } else {
-        this.setValue(`${this.Year}-${this.Month}-${val.day}`);
-      }
-      this.isShowDate = false;
-    },
-    initValue () {
-      const date = new Date(this.defaultValue);
-      let y = this.Year = date.getFullYear();
-      let m = this.Month = date.getMonth() + 1;
-      let d = this.Day = date.getDate();
-      let str1 = `${y}-${m}-${d}`;
-
-      let str2 = `${y}-${m*1 < 10 ? '0' + m : m}-${d < 10 ? '0' + d : d}`;
-
-      str1 == this.defaultValue || this.defaultValue == str2
-      ? this.setValue(this.defaultValue)
-      : this.dateValue = '';
-    },
-    setValue (val) {
-      if (val == '') return;
-      var dateArr = val.split('-').map(num => {
-        if (num.length >= 2) return num;
-        return num * 1 >= 10  ? + num : ('0' + num)
-      })
-
-      this.Year = dateArr[0];
-      this.Month = dateArr[1];
-      this.Day = dateArr[2];
-
-      this.dateValue = dateArr.join('-');
-    },
-    handleYear (ber) {
-      ber ? this.Year -= 1 : this.Year += 1;
-      this.getDate(this.Year) 
-    },
-    handleMonth (ber) {
+    handleMonth (ber) { // 加减月
       if (ber) {
         if (--this.Month < 1) {
           this.Month = 12;
@@ -244,16 +207,45 @@ export default {
           this.Year += 1;
         }
       }
-      this.getDate(this.Year, this.Month) 
+      this.initListDate() 
+    },
+    selection (val) { // 选中日期
+      let str = '';
+      if (val.class == 'xl-date-pastTimes' ) { // 上个月
+        pastTimes(val.day)
+      } else if (val.class == 'xl-date-future' ) { // 下个月
+        future(val.day)
+      } else {
+        this.initValue(`${this.Year}-${this.Month}-${val.day}`);
+      }
+     
+      this.isShowDate = false;
+    },
+    pastTimes(val = this.Day) {
+      let str = this.Month - 1 < 1
+                ? `${this.Year - 1 }-12-${val}`
+                : `${this.Year}-${this.Month - 1}-${val}`;
+
+      this.initValue(str);
+    },
+    future (val = this.Day) {
+      let str = this.Month + 1 > 12
+                ? `${this.Year + 1 }-1-${val}`
+                : `${this.Year}-${this.Month + 1}-${val}`;
+
+      this.initValue(str);
     }
-  },
-  mounted () {
-    this.initValue();
-    this.initDate();
   },
   watch: {
     dateValue (val) {
       this.$emit('input', val)
+    },
+    value (val) {
+      if (new Date(val) == 'Invalid Date') {
+        console.error('请输入正确的时间！');
+      } else {
+        this.initValue(val)
+      }
     }
   }
 }

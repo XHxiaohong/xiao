@@ -134,9 +134,6 @@ export default {
 
     this.tags = JSON.parse(tags) || ['首页'],
     this.include = JSON.parse(include) || ['home']
-
-    console.log(this.userName, this.userImg, 234)
-    console.log(this.$store.state)
   }
 }
 </script>

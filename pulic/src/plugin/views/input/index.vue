@@ -3,7 +3,7 @@
     <!-- 前置图标 -->
     <span></span>
 
-    <input :type="type" v-model="dateValue" :placeholder="placeholder">
+    <input :type="type" v-model="inputValue" :placeholder="placeholder">
 
     <!-- 后置图标 -->
     <span v-if="suffixIcon"></span>
@@ -21,15 +21,19 @@ export default {
     placeholder: String,
     prefixIcon: String,
     suffixIcon: String,
+    isSuffixIcon: Boolean
   },
   data () {
     return {
-      dateValue: ''
+      inputValue: ''
     }
   },
   watch: {
-    dateValue (val) {
+    inputValue (val) {
       this.$emit('input', val)
+    },
+    value (val) {
+      this.inputValue = val
     }
   }
 };

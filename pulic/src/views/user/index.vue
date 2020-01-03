@@ -2,7 +2,7 @@
   <div class="container" id="user">
     <div class="left">
       <img :src="userImg" alt="用户头像" class="userImg" />
-      <h3>{{name}}</h3>
+      <h3>{{username}}</h3>
       <span>注册日期： {{date}}</span>
 
       <button class="submit">
@@ -41,7 +41,7 @@
         </xl-from-itme>
 
         <xl-from-itme label="性别" class="xl-from-itme">
-          <xl-input v-model="username" placeholder="请输入用户性别" />
+          <xl-input v-model="gender" placeholder="请输入用户性别" />
         </xl-from-itme>
 
         <xl-from-itme label="生日" class="xl-from-itme">
@@ -50,13 +50,12 @@
         </xl-from-itme>
 
         <xl-from-itme label="地址" class="xl-from-itme">
-          <xl-input v-model="username" placeholder="请输入用户地址" />
+          <xl-input v-model="address" placeholder="请输入用户地址" />
         </xl-from-itme>
 
         <xl-from-itme label="个性签名" class="xl-from-itme">
-          <xl-input v-model="username" placeholder="请输入个性签名" />
+          <xl-input v-model="autograph" placeholder="请输入个性签名" />
         </xl-from-itme>
-
       </xl-from>
 
       <button class="save_button" @click="save">保存</button>
@@ -71,11 +70,15 @@ export default {
   name: "userCenter",
   data() {
     return {
+      id: "",
       name: "",
       date: "",
       phone: "",
       email: "",
+      gender: "",
       username: "",
+      address: "",
+      autograph: "",
       birthday: '',
       value: null
     };
@@ -88,11 +91,15 @@ export default {
     ...mapMutations(["setUserImg"]),
     getList() {
       let url = `/user/list?username=${this.userName}`;
-      this.$http
-        .get(url)
+      this.$http.get(url)
         .then(({ msg, data }) => {
-          this.email = data.email;
-          this.phone = data.telephone;
+          this.id = data[0]._id;
+          this.email = data[0].email;
+          this.phone = data[0].telephone;
+          this.gender = data[0].gender;
+          this.username = data[0].username;
+          // this.birthday = data[0].birthday;
+          this.birthday = '2020-2-3'
         })
         .catch(err => {
           // console.log(err);
@@ -121,46 +128,37 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      })
-        .then(value => {
+      }).then(value => {
           if (!value) return (this.value = null);
-          this.$http
-            .post("/user/uploadImg", formData)
-            .then(({ msg, url, text }) => {
+          this.$http.post("/user/uploadImg", formData).then(({ msg, url, text }) => {
               if (msg == "success") {
                 this.$message.success(text);
                 this.$nextTick(() => {
                   this.setUserImg(url);
                 });
               }
-            })
-            .catch(err => {
+          }).catch(err => {
               this.$message({
                 type: "error",
                 message: "图像上传失败！",
                 duration: 5000
               });
-            });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          });
+      }).catch(err => console.log(err));
     },
     phoneFun() {
       let data = {
         username: this.userName,
         telephone: this.phone
       };
-      this.$http
-        .post("/user/telephone", data)
-        .then(({ msg, data }) => {
+      this.$http.post("/user/telephone", data)
+      .then(({ msg, data }) => {
           this.$message({
             type: "success",
             message: "绑定手机成功！",
             duration: 5000
           });
-        })
-        .catch(err => {
+      }).catch(err => {
           this.$message({
             type: "error",
             message: "绑定手机失败！",
@@ -169,7 +167,20 @@ export default {
         });
     },
     save () {
-      this.birthday = ''
+      let data = {
+        id: this.id,
+        name: this.name,
+        username: this.username,
+        gender: this.gender,
+        birthday: this.birthday,
+        autograph: this.autograph,
+        address: this.address
+      }
+      this.$http.post('/user/update', data).then(data=> {
+        console.log(data)
+      }).catch(err=> {
+        console.log(err)
+      })
     }
   },
   mounted() {
@@ -178,7 +189,7 @@ export default {
   watch: {
     userImg(value) {},
     birthday(val) {
-      console.log(val, 'birthday');
+      console.log(val, '时间')
     }
   }
 };
@@ -244,6 +255,9 @@ export default {
     width: 40%;
     padding-top: 20px;
     border-right: 1px solid #aaa;
+    h3 {
+      margin: 8px;
+    }
     .userImg {
       width: 130px;
       height: 130px;

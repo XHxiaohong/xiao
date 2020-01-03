@@ -23,8 +23,6 @@ export default new Vuex.Store({
       state.userImg = window.baseURL;
       state.userImg += url;
       sessionStorage.setItem('imgUrl', state.userImg);
-
-      console.log(url, state.userImg);
     }
   },
   actions: {
