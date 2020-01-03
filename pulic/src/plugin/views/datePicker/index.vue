@@ -15,35 +15,58 @@
       class="xl-icon xl-icon-reeor-fill"></i>
     </div>
 
-    <div v-show="isShowDate"
-    class="xl-date-conent"
-    @click="onSelection" id="xl-date-conent"> 
+    <div v-show="isShowDate" class="xl-date-conent" @click="onSelection" id="xl-date-conent"> 
       <div class="xl-date-title">
-        <i class="xl-icon xl-icon-double-arrow-left" @click="handleYear(true)"></i>
-        <i class="xl-icon xl-icon-arrow-lift" @click="handleMonth(true)"></i>
-        <section class="xl-date-title-section">
+        <section  v-show="isListDate">
+          <i class="xl-icon xl-icon-double-arrow-left" @click="handleYear(true)"></i>
+          <i class="xl-icon xl-icon-arrow-lift" @click="handleMonth(true)"></i>
+        </section>
+
+        <section class="xl-date-title-section" @click="isListDate = !isListDate">
           <span> {{Year}}  年 </span> 
           <span> {{Month}} 月 </span>
         </section>
-        <i class="xl-icon xl-icon-arrow-right1" @click="handleMonth(false)"></i>
-        <i class="xl-icon xl-icon-double-arro-right" @click="handleYear(false)"></i>
+
+        <section v-show="isListDate">
+          <i class="xl-icon xl-icon-arrow-right1" @click="handleMonth(false)"></i>
+          <i class="xl-icon xl-icon-double-arro-right" @click="handleYear(false)"></i>
+        </section>
       </div>
 
-      <div class="xl-date__week">
-        <span>日</span>
-        <span>一</span>
-        <span>二</span>
-        <span>三</span>
-        <span>四</span>
-        <span>五</span>
-        <span>六</span>
+      <div class="xl-date__box"  v-show="isListDate">
+        <div class="xl-date__week">
+          <span>日</span>
+          <span>一</span>
+          <span>二</span>
+          <span>三</span>
+          <span>四</span>
+          <span>五</span>
+          <span>六</span>
+        </div>
+
+        <ul class="xl-date-list__box">
+          <template v-for="item in listDate">
+            <li :class="item.class" @click.stop="selection(item)"> {{item.day}}</li>
+          </template>
+        </ul>
       </div>
 
-      <ul class="xl-date-list__box">
-        <template v-for="item in listDate">
-          <li :class="item.class" @click.stop="selection(item)"> {{item.day}}</li>
-        </template>
-      </ul>
+      <div v-show="!isListDate">
+        <div class="xl-year__box">
+          <i class="xl-icon xl-icon-double-arrow-left" @click="handleYear(true)"></i>
+          <input type="text" v-model="Year" class="xl-year-input">
+          <i class="xl-icon xl-icon-double-arro-right" @click="handleYear(false)"></i>
+        </div>
+
+        <ul class="xl-month-list__box" @click="isListDate = true">
+          <template v-for="(item, i) in listMonth"> 
+            <li :class="[i == Month - 1 ? 'xl-month-section' : '']" 
+            @click="Month = i + 1"
+            :key="'xl-month-' + i">{{item}}</li>
+          </template>
+        </ul>
+      </div>
+
     </div>
   </div>
 </template>
@@ -83,13 +106,20 @@ export default {
     }
   },
   data () {
+    let listMonth = [], i = 1;
+    while (i <= 12) {
+      listMonth.push(i + '月');
+      i++
+    }
     return {
       dateValue: '',
+      isListDate: true,
       isShowDate: false,
       Year: '',
       Month: '',
       Day: '',
-      listDate: []
+      listDate: [],
+      listMonth
     }
   },
   // computed: {
@@ -119,24 +149,26 @@ export default {
         d = d || this.Day;
         date = new Date(y, m - 1, d); // Date 函数月份从零开始计数，故减一
       }
-      
+      this.getDate(y, m, d);
+    },
+    getDate (y, m, d) {
       let Day = (new Date(y, m - 1, 0)).getDate(); // 上个月最后一天也即每月多少天
       let firstDay = (new Date(y, m - 1, 1)).getDate(); // 每月第一天
       let lastDay  = (new Date(y, m, 0)).getDate(); // 每月最后一天也即每月多少天
       let firstDayisWhat = (new Date(y, m - 1, 1)).getDay(); // 第一天星期几0-6（星期日到星期六）
 
       for (var i = -firstDayisWhat; i < 42 - firstDayisWhat; i++) {
-        if (i < 0) {
+        if (i < 0) { // 上一个月
           this.listDate.push({
             day: Day + i + 1,
             class: 'xl-date-pastTimes'
           })
-        } else if (i < lastDay) {
+        } else if (i < lastDay) { // 这个月
           this.listDate.push({
             day: i + 1,
             class: i + 1 == d ? 'xl-date-selection' : ''
           })
-        } else {
+        } else { // 下一个月
           this.listDate.push({
             day: i + 1 - lastDay,
             class: 'xl-date-future'
@@ -189,7 +221,7 @@ export default {
         if (num.length >= 2) return num;
         return num * 1 >= 10  ? + num : ('0' + num)
       })
-      
+
       this.Year = dateArr[0];
       this.Month = dateArr[1];
       this.Day = dateArr[2];
@@ -197,9 +229,8 @@ export default {
       this.dateValue = dateArr.join('-');
     },
     handleYear (ber) {
-       ber ? 
-       this.initDate(--this.Year)
-       : this.initDate(++this.Year) 
+      ber ? this.Year -= 1 : this.Year += 1;
+      this.getDate(this.Year) 
     },
     handleMonth (ber) {
       if (ber) {
@@ -207,14 +238,13 @@ export default {
           this.Month = 12;
           this.Year -= 1;
         }
-        this.initDate() 
       } else {
         if (++this.Month > 12) {
           this.Month = 1;
           this.Year += 1;
         }
-        this.initDate() 
       }
+      this.getDate(this.Year, this.Month) 
     }
   },
   mounted () {

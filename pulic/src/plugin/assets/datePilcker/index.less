@@ -7,8 +7,10 @@
   position: relative;
   border: 1px solid;
   border-radius: 5px; 
+  user-select: none;
   display: inline-block;
   border-color: @border;
+  
 }
 
 .xl-date-pilcker-input__box {
@@ -37,7 +39,8 @@
   }
 }
 .xl-date-conent {
-  width: 280px;;
+  width: 280px;
+  height: 300px;
   position: absolute;
   top: 100%;
   left: 0;
@@ -51,13 +54,20 @@
 .xl-date-title {
   display: flex;
   font-weight: 800;
-  padding: 2px 10px;
+  padding: 0px 10px;
+  padding-bottom: 5px;
   border-bottom: 1px solid rgba(136, 136, 136, 0.33);
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 .xl-date-title-section {
-  width: 100%;
+  width: 80%;
   text-align: center;
+  cursor: pointer;
+  span:nth-child(2) {
+    width: 42px;
+    display: inline-block;
+  }
 }
 .xl-date__week {
   font-weight: 600;
@@ -66,7 +76,47 @@
 .xl-date-list__box {
   color: @lightBlack;
   list-style-type: none;
+  li {
+    cursor: pointer;
+  }
 }
+.xl-year__box {
+  width: 100%;
+  display: flex;
+  margin: 10px 0;
+  margin-bottom: 18px;
+  justify-content: center;
+  align-items: center;
+  .xl-icon { font-weight: 800;}
+  .xl-year-input {
+    width: 70px;
+    height: 26px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 15px;
+    border: 1px solid @border;
+  }
+}
+
+.xl-month-list__box {
+  text-align: center;
+  li {
+    width: 55px;
+    height: 60px;
+    margin: 5px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 60px;
+    background: #d2d2c5;;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .xl-month-section {
+    color: @primary;;
+    background: #e8e8cc !important;
+  }
+}
+
 .xl-date__week span,
 .xl-date-list__box li{
   width: 40px;
