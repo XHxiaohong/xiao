@@ -134,7 +134,20 @@ export default {
       })
     }
   },
-  mounted () {}
+  mounted () {
+    let _this = this;
+    function onEnter (ev) {
+      ev = ev || event
+      if (ev.keyCode && ev.keyCode == 13) {
+        _this.login();
+        document.onkeydown = ''
+        setTimeout(()=> { // 节流处理
+         document.onkeydown = onEnter;
+        }, 2000)
+      }
+    } 
+    document.onkeydown = onEnter;
+  }
 }
 </script>
 
