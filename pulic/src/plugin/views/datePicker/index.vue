@@ -1,6 +1,6 @@
 <template>
-  <div :class="['xl-date-pilcker']" v-colse>
-    <div class="xl-date-pilcker-input__box">
+  <div :class="['xl-date-pilcker', isShowDate ? 'xl-border-hover' : '']" v-colse>
+    <div class="xl-date-pilcker-input__box" >
       <i class="xl-icon xl-icon-rili"></i>
       <input type="text"
        v-model="dateValue"
@@ -221,14 +221,14 @@ export default {
      
       this.isShowDate = false;
     },
-    pastTimes(val = this.Day) {
+    pastTimes(val = this.Day) { // 
       let str = this.Month - 1 < 1
                 ? `${this.Year - 1 }-12-${val}`
                 : `${this.Year}-${this.Month - 1}-${val}`;
 
       this.initValue(str);
     },
-    future (val = this.Day) {
+    future (val = this.Day) { // 选中下个月的时间
       let str = this.Month + 1 > 12
                 ? `${this.Year + 1 }-1-${val}`
                 : `${this.Year}-${this.Month + 1}-${val}`;
